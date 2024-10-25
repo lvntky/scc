@@ -16,10 +16,10 @@ SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 # Targets
-.PHONY: all clean test run
+.PHONY: all clean test run format
 
 # Default target
-all: $(EXEC)
+all: format $(EXEC)
 
 # Build executable
 $(EXEC): $(OBJ_FILES) | $(BIN_DIR)
@@ -31,6 +31,11 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 	@echo "Compiled: $<"
 
+# Format source and header files
+format:
+	@echo "Formatting code..."
+	clang-format -i $(SRC_DIR)/*.c $(INCLUDE_DIR)/*.h
+
 # Create necessary directories
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
@@ -39,12 +44,12 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 # Run the executable
-run: $(EXEC)
+run: format $(EXEC)
 	@echo "Running $(EXEC)..."
 	./$(EXEC)
 
 # Testing target (if you have test files)
-test: $(EXEC)
+test: format $(EXEC)
 	@echo "Running tests..."
 	# Add your test commands here, e.g., $(TEST_DIR)/test_program
 	@echo "Tests completed."
@@ -54,4 +59,3 @@ clean:
 	@echo "Cleaning project..."
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 	@echo "Cleaned."
-
