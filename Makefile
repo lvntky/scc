@@ -46,7 +46,7 @@ $(OBJ_DIR):
 # Run the executable
 run: format $(EXEC)
 	@echo "Running $(EXEC)..."
-	./$(EXEC)
+	./$(EXEC) $(TEST_DIR)/first
 
 # Testing target (if you have test files)
 test: format $(EXEC)
