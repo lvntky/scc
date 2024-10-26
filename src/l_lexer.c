@@ -67,7 +67,7 @@ token_t lexer_get_next_token(FILE *source)
 }
 int lexer_is_keyword(const char *str)
 {
-	for (int i = 0; i < sizeof(keywords) / sizeof(char *); i++) {
+	for (size_t i = 0; i < sizeof(keywords) / sizeof(char *); i++) {
 		if (strcmp(str, keywords[i]) == 0) {
 			return 1;
 		}

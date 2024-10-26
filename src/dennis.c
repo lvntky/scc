@@ -4,6 +4,11 @@
 
 int main(int argc, char **argv)
 {
+	if (argc < 2) {
+		perror("Can't found any source code.\n");
+		exit(EXIT_FAILURE);
+	}
+
 	FILE *source = fopen(argv[1], "r");
 	if (!source) {
 		perror("Unable to open source code.\n");
